@@ -1,0 +1,26 @@
+<%= link_to "Back", images_path, class: "btn btn-secondary mb-3" %>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Editing Image</h4>
+                <%= render "form", image: @image %>
+            </div>
+            <div class=card-footer>
+                <% if @image.published? %>
+                    <a href="#" class="btn btn-secondary btn-block"
+                        data-reflex="click->PublisherReflex#unpublish"
+                        data-image-id="<%= @image.id %>">
+                        Unpublish    
+                    </a>
+                <% else %>
+                    <a href="#" class="btn btn-dark btn-block"
+                        data-reflex="click->PublisherReflex#publish"
+                        data-image-id="<%= @image.id %>">
+                        Publish    
+                    </a>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

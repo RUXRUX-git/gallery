@@ -1,0 +1,37 @@
+<h1>All published images</h1>
+
+<% User.all.each do |user| %>
+    <div class="card-group">
+        <% published_images = user.images.select { |image| image.published? } %>
+        <% unless published_images.empty? %>
+            <h3 class="col-12">User's mail: <%= user.email %></h3>
+            <% published_images.each do |image| %>
+                <div class="card">
+                    <div class="container">
+                        <img class="card-img-top" src="<%= url_for(image.upload) %>" alt="User's image">
+
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><%= image.description %></p>
+                        <% pre_like = image.likes.find { |like| like.user_id == current_user&.id} %>
+                        <% if user_signed_in? %>
+                            <% if pre_like %>
+                                <a href="#" class="btn btn-secondary" 
+                                    data-reflex="click->LikerReflex#unlike" 
+                                    data-image-id="<%= image.id %>">
+                                    Unlike
+                                </a>
+                            <% else %>
+                                <a href="#" class="btn btn-primary" 
+                                    data-reflex="click->LikerReflex#like" 
+                                    data-image-id="<%= image.id %>">
+                                    Like
+                                </a>
+                            <% end %>
+                        <% end %>
+                    </div>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+<% end %>
